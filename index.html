@@ -6,7 +6,7 @@
 	
 	<link rel="stylesheet" type="text/css" href="styles/main.css">
 </head>
-<body >
+<body>
 
 <div ng-controller="MainController">
 	<header>
@@ -16,7 +16,7 @@
 		<form name="myForm" ng-submit="submitted=true; submit()" novalidate>
 			<h1>Enter the Meal Details</h1>
 			<br><br>
-			<pre>Base Meal Price $ <input type="text" name="mealPrice" ng-model="mealPrice" ng-pattern="/^[0-9]{1,20}$/" ng-class="{'error-class': mealPriceError}" required ></pre>
+			<pre>Base Meal Price $ <input type="text" id="mealPrice" name="mealPrice" ng-model="mealPrice" ng-pattern="/^[0-9]{1,20}$/" ng-class="{'error-class': mealPriceError}" autofocus required ></pre>
 			<br><br>
 			<pre>       Tax Rate % <input type="text" name="taxRate" ng-model="taxRate" ng-pattern="/^[0-9]{1,20}$/" ng-class="{'error-class': taxRateError}" required></pre>
 			<br><br>
