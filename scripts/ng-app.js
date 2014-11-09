@@ -9,7 +9,7 @@ angular.module('waitstaffCalculatorApp', [])
         $scope.earningsTipTotal = 0;
         $scope.earningsMealCount = 0;
         $scope.earningsTipAverage = 0;
-                
+
     	$scope.submit = function(){
             if ($scope.myForm.mealPrice.$error.required ||
                 $scope.myForm.mealPrice.$error.pattern)
@@ -43,23 +43,30 @@ console.log($scope.mealPrice);
                 $scope.earningsMealCount += 1;
                 $scope.earningsTipAverage = (Number($scope.earningsTipTotal) / Number($scope.earningsMealCount)).toFixed(2);
             }
+            $scope.mealPrice = "";
+            $scope.taxRate ="";
+            $scope.tipPercentage = "";
+            document.getElementById("mealPrice").focus();
     	};
         $scope.cancel = function(event){
             event.preventDefault();
-            $scope.mealPrice = 0;
-            $scope.taxRate = 0;
-            $scope.tipPercentage = 0;
+            $scope.mealPrice = "";
+            $scope.taxRate ="";
+            $scope.tipPercentage = "";
+            document.getElementById("mealPrice").focus();
         };
     	$scope.reset = function(){
-            $scope.mealPrice = 0;
-            $scope.taxRate = 0;
-            $scope.tipPercentage = 0;
+            $scope.mealPrice = "";
+            $scope.taxRate ="";
+            $scope.tipPercentage ="";
             $scope.custSubTotal = 0;
             $scope.custTip = 0;
             $scope.custTotal = 0;
             $scope.earningsTipTotal = 0;
             $scope.earningsMealCount = 0;
             $scope.earningsTipAverage = 0;
+            document.getElementById("mealPrice").focus();   
     	};
     }]);
+
 
