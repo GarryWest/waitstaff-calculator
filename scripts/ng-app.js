@@ -1,4 +1,4 @@
-angular.module('waitstaffCalculatorApp', ['ngRoute'])
+angular.module('waitstaffCalculatorApp', ['ngRoute', 'ngAnimate'])
     .service('dataService', function () {
         var dataResponse = {
             mealPriceError: false,
@@ -37,6 +37,19 @@ angular.module('waitstaffCalculatorApp', ['ngRoute'])
             template : '<p>Error Page Not Found</p>'
         });
     }])
+    .run(function($rootScope, $location, $timeout) {
+        $rootScope.$on('$routeChangeError', function(){
+            $location.path("/error");
+        });
+        $rootScope.$on('$routeChangeStart', function(){
+            $rootScope.isLoading = true;
+        });
+        $rootScope.$on('$routeChangeSuccess', function(){
+            $timeout(function(){
+                $rootScope.isLoading = false;
+            }, 1000);
+        });
+    })
     .controller('HomeCtrl', ['$scope', function($scope) {
     }])
     .controller('NewMealCtrl', ['$scope', 'dataService', function($scope, dataService) {
