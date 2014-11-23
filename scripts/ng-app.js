@@ -1,7 +1,16 @@
 angular.module('waitstaffCalculatorApp', ['ngRoute'])
     .service('dataService', function () {
-        var dataResponse = {};
-
+        var dataResponse = {
+            mealPriceError: false,
+            taxRateError: false,
+            tipPercentageError : false,
+            custSubTotal : 0,
+            custTip : 0,
+            custTotal : 0,
+            earningsTipTotal : 0,
+            earningsMealCount : 0,
+            earningsTipAverage : 0
+        };
         return {
             saveDataResponse:function (data) {
                 dataResponse = data;
@@ -31,18 +40,7 @@ angular.module('waitstaffCalculatorApp', ['ngRoute'])
     .controller('HomeCtrl', ['$scope', function($scope) {
     }])
     .controller('NewMealCtrl', ['$scope', 'dataService', function($scope, dataService) {
-        $scope.Data = {
-            mealPriceError: false,
-            taxRateError: false,
-            tipPercentageError : false,
-            custSubTotal : 0,
-            custTip : 0,
-            custTotal : 0,
-            earningsTipTotal : 0,
-            earningsMealCount : 0,
-            earningsTipAverage : 0
-        };
-
+        $scope.Data = dataService.getDataResponse();
         $scope.submit = function(){
             if ($scope.myForm.mealPrice.$error.required ||
                 $scope.myForm.mealPrice.$error.pattern)
