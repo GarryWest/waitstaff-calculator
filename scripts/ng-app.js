@@ -84,9 +84,9 @@ angular.module('waitstaffCalculatorApp', ['ngRoute'])
         };
         $scope.cancel = function(event){
             event.preventDefault();
-            $scope.mealPrice = "";
-            $scope.taxRate ="";
-            $scope.tipPercentage = "";
+            $scope.Data.mealPrice = "";
+            $scope.Data.taxRate ="";
+            $scope.Data.tipPercentage = "";
             document.getElementById("mealPrice").focus();
         };
     }])
