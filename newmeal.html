@@ -1,0 +1,20 @@
+<div class="col-1-2">
+	<form name="myForm" ng-submit="submitted=true; submit()" novalidate>
+		<h1>Enter the Meal Details</h1>
+		<pre>Base Meal Price $ <input type="text" id="mealPrice" name="mealPrice" ng-model="Data.mealPrice" ng-pattern="/^[0-9]{1,20}$/" ng-class="{'error-class': mealPriceError}" autofocus required ></pre>
+		<pre>       Tax Rate % <input type="text" name="taxRate" ng-model="Data.taxRate" ng-pattern="/^[0-9]{1,20}$/" ng-class="{'error-class': taxRateError}" required></pre>
+		<pre> Tip Percentage % <input type="text" name="tipPercentage" ng-model="Data.tipPercentage" ng-pattern="/^[0-9]{1,20}$/" ng-class="{'error-class': tipPercentageError}" required></pre>
+		<input type="submit" value="Submit" >
+		<button ng-click="cancel($event)">Cancel</button>
+	</form>
+</div>
+
+<div class="col-1-2 info-box cust-charges">
+	<h1>Customer Charges</h1>
+	<table>
+	<tr><td >Subtotal:</td><td >{{Data.custSubTotal | number:2}}</td></tr>
+	<tr><td >Tip:</td><td >{{Data.custTip | number:2}}</td></tr> 
+	<tr><td><hr></td><td><hr></td><td><hr></td></tr>
+	<tr><td >Total:</td><td >{{Data.custTotal | number:2}}</pre></h2>
+	</table>
+</div>

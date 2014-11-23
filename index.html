@@ -1,55 +1,22 @@
 <!DOCTYPE html>
 <html ng-app="waitstaffCalculatorApp">
 <head>
-	<title>Waitstaff Calculator</title>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
-	
-	<link rel="stylesheet" type="text/css" href="styles/main.css">
+ 	<meta charset="UTF-8">
+ 	<title>Waitstaff Calculator</title>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular-route.min.js"></script>
+	<script src="scripts/ng-app.js"></script>
+	<link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-
-<div ng-controller="MainController">
 	<header>
 		<h1>Waitstaff Calculator</h1>
 	</header>
-	<div class="col-1-2">
-		<form name="myForm" ng-submit="submitted=true; submit()" novalidate>
-			<h1>Enter the Meal Details</h1>
-			<br><br>
-			<pre>Base Meal Price $ <input type="text" id="mealPrice" name="mealPrice" ng-model="mealPrice" ng-pattern="/^[0-9]{1,20}$/" ng-class="{'error-class': mealPriceError}" autofocus required ></pre>
-			<br><br>
-			<pre>       Tax Rate % <input type="text" name="taxRate" ng-model="taxRate" ng-pattern="/^[0-9]{1,20}$/" ng-class="{'error-class': taxRateError}" required></pre>
-			<br><br>
-			<pre> Tip Percentage % <input type="text" name="tipPercentage" ng-model="tipPercentage" ng-pattern="/^[0-9]{1,20}$/" ng-class="{'error-class': tipPercentageError}" required></pre>
-			<br>
-			<input type="submit" value="Submit" >
-			<button ng-click="cancel($event)">Cancel</button>
-		</form>
-	</div>
-	<div class="col-1-2 info-box cust-charges">
-		<h1>Customer Charges</h1>
-		<br>
-		<table>
-		<tr><td >Subtotal:</td><td >{{custSubTotal | number:2}}</td></tr>
-		<tr><td >Tip:</td><td >{{custTip | number:2}}</td></tr> 
-		<tr><td><hr></td><td><hr></td><td><hr></td></tr>
-		<tr><td >Total:</td><td >{{custTotal | number:2}}</pre></h2>
-		</table>
-	</div>
-	<div class="col-1-2 info-box">
-		<h1>My Earnings Info</h1>
-		<br>
-		<table>
-		<tr><td>Tip Total:</td><td>{{earningsTipTotal | number:2}}</td></tr>
-		<tr><td>Meal Count:</td><td>{{earningsMealCount | number:2}}</td></tr> 
-		<tr><td class="wide">Average Tip Per Meal:</td><td>{{earningsTipAverage | number:2}}</td></tr>
-		</table>
-	</div>
-	<div class="group">
-		<button class="reset-button" ng-click="reset()">Reset</button>
-	</div>
-</div>	
-<script src="scripts/ng-app.js"></script>
+	<a href="#/home">Home</a>
+	<a href="#/newmeal">New Meal</a>
+	<a href="#/myearnings">My Earnings</a>
+	<div ng-view></div>
+
 </body>
 
 </html>

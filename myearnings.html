@@ -1,0 +1,10 @@
+<div class="col-1-2">
+	<h1>My Earnings Info</h1>
+	<br>
+	<table>
+	<tr><td>Tip Total:</td><td>{{Data.earningsTipTotal | number:2}}</td></tr>
+	<tr><td>Meal Count:</td><td>{{Data.earningsMealCount | number:2}}</td></tr> 
+	<tr><td class="wide">Average Tip Per Meal:</td><td>{{Data.earningsTipAverage | number:2}}</td></tr>
+	</table>
+	<button class="reset-button" ng-click="reset()">Reset</button>
+</div>
