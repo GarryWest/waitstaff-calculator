@@ -1,53 +1,87 @@
-angular.module('waitstaffCalculatorApp', [])
-	.controller('MainController', ['$scope', function($scope) {
-        $scope.mealPriceError = false;
-        $scope.taxRateError = false;
-        $scope.tipPercentageError = false;
-        $scope.custSubTotal = 0;
-        $scope.custTip = 0;
-        $scope.custTotal = 0;
-        $scope.earningsTipTotal = 0;
-        $scope.earningsMealCount = 0;
-        $scope.earningsTipAverage = 0;
+angular.module('waitstaffCalculatorApp', ['ngRoute'])
+    .service('dataService', function () {
+        var dataResponse = {};
 
-    	$scope.submit = function(){
+        return {
+            saveDataResponse:function (data) {
+                dataResponse = data;
+            },
+            getDataResponse:function () {
+                return dataResponse;
+            }
+        };
+    })
+	.config(['$routeProvider', function($routeProvider){
+        $routeProvider.when('/', {
+            templateUrl: './home.html',
+            controller: 'HomeCtrl'
+        }).when('/home', {
+            templateUrl: './home.html',
+            controller: 'HomeCtrl'
+        }).when('/newmeal', {
+            templateUrl: './newmeal.html',
+            controller: 'NewMealCtrl'
+        }).when('/myearnings', {
+            templateUrl: './myearnings.html',
+            controller: 'MyEarningsCtrl'
+        }).when('/error', {
+            template : '<p>Error Page Not Found</p>'
+        });
+    }])
+    .controller('HomeCtrl', ['$scope', function($scope) {
+    }])
+    .controller('NewMealCtrl', ['$scope', 'dataService', function($scope, dataService) {
+        $scope.Data = {
+            mealPriceError: false,
+            taxRateError: false,
+            tipPercentageError : false,
+            custSubTotal : 0,
+            custTip : 0,
+            custTotal : 0,
+            earningsTipTotal : 0,
+            earningsMealCount : 0,
+            earningsTipAverage : 0
+        };
+
+        $scope.submit = function(){
             if ($scope.myForm.mealPrice.$error.required ||
                 $scope.myForm.mealPrice.$error.pattern)
             {
-                $scope.mealPriceError = true;
-                $scope.taxRateError = false;
-                $scope.tipPercentageError = false;
+                $scope.Data.mealPriceError = true;
+                $scope.Data.taxRateError = false;
+                $scope.Data.tipPercentageError = false;
             } else if ($scope.myForm.taxRate.$error.required ||
                 $scope.myForm.taxRate.$error.pattern)
             {
-                $scope.mealPriceError = false;
-                $scope.taxRateError = true;
-                $scope.tipPercentageError = false;
+                $scope.Data.mealPriceError = false;
+                $scope.Data.taxRateError = true;
+                $scope.Data.tipPercentageError = false;
             } else if ($scope.myForm.tipPercentage.$error.required ||
                 $scope.myForm.tipPercentage.$error.pattern)
             {
-                $scope.mealPriceError = false;
-                $scope.taxRateError = false;
-                $scope.tipPercentageError = true;
+                $scope.Data.mealPriceError = false;
+                $scope.Data.taxRateError = false;
+                $scope.Data.tipPercentageError = true;
             } else {
-                $scope.mealPriceError = false;
-                $scope.taxRateError = false;
-                $scope.tipPercentageError = false;
-console.log($scope.mealPrice);
+                $scope.Data.mealPriceError = false;
+                $scope.Data.taxRateError = false;
+                $scope.Data.tipPercentageError = false;
 
-                $scope.custSubTotal = (Number(Number($scope.mealPrice) + ((Number($scope.mealPrice) * Number($scope.taxRate)) / 100))).toFixed(2);
-                $scope.custTip = (Number($scope.custSubTotal) * Number($scope.tipPercentage) / 100).toFixed(2);
-                $scope.custTotal = Number($scope.custSubTotal) + Number($scope.custTip);
+                $scope.Data.custSubTotal = (Number(Number($scope.Data.mealPrice) + ((Number($scope.Data.mealPrice) * Number($scope.Data.taxRate)) / 100))).toFixed(2);
+                $scope.Data.custTip = (Number($scope.Data.custSubTotal) * Number($scope.Data.tipPercentage) / 100).toFixed(2);
+                $scope.Data.custTotal = Number($scope.Data.custSubTotal) + Number($scope.Data.custTip);
 
-                $scope.earningsTipTotal = (Number($scope.earningsTipTotal)+Number($scope.custTip)).toFixed(2);
-                $scope.earningsMealCount += 1;
-                $scope.earningsTipAverage = (Number($scope.earningsTipTotal) / Number($scope.earningsMealCount)).toFixed(2);
+                $scope.Data.earningsTipTotal = (Number($scope.Data.earningsTipTotal)+Number($scope.Data.custTip)).toFixed(2);
+                $scope.Data.earningsMealCount += 1;
+                $scope.Data.earningsTipAverage = (Number($scope.Data.earningsTipTotal) / Number($scope.Data.earningsMealCount)).toFixed(2);
+                // Update the earnings view data
+                dataService.saveDataResponse($scope.Data);
             }
-            $scope.mealPrice = "";
-            $scope.taxRate ="";
-            $scope.tipPercentage = "";
+            $scope.Data.mealPrice = "";
+            $scope.Data.taxRate ="";
+            $scope.Data.tipPercentage = "";
             document.getElementById("mealPrice").focus();
-    	};
+        };
         $scope.cancel = function(event){
             event.preventDefault();
             $scope.mealPrice = "";
@@ -55,18 +89,21 @@ console.log($scope.mealPrice);
             $scope.tipPercentage = "";
             document.getElementById("mealPrice").focus();
         };
-    	$scope.reset = function(){
-            $scope.mealPrice = "";
-            $scope.taxRate ="";
-            $scope.tipPercentage ="";
-            $scope.custSubTotal = 0;
-            $scope.custTip = 0;
-            $scope.custTotal = 0;
-            $scope.earningsTipTotal = 0;
-            $scope.earningsMealCount = 0;
-            $scope.earningsTipAverage = 0;
+    }])
+   .controller('MyEarningsCtrl', ['$scope', 'dataService', function($scope, dataService) {
+        $scope.Data = dataService.getDataResponse();
+        $scope.reset = function(){
+            $scope.Data.mealPrice = "";
+            $scope.Data.taxRate ="";
+            $scope.Data.tipPercentage ="";
+            $scope.Data.custSubTotal = 0;
+            $scope.Data.custTip = 0;
+            $scope.Data.custTotal = 0;
+            $scope.Data.earningsTipTotal = 0;
+            $scope.Data.earningsMealCount = 0;
+            $scope.Data.earningsTipAverage = 0;
+            dataService.saveDataResponse($scope.Data);
             document.getElementById("mealPrice").focus();   
-    	};
-    }]);
-
-
+        };
+    }])
+    
